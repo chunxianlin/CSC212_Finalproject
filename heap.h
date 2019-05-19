@@ -11,16 +11,23 @@ namespace Final_project{
                 root_ptr = NULL;
                 current_ptr = NULL;
             }
-            void create_root(const node::value_type& entry, const std::string event); 
-            void insert(const node::value_type& entry, const std::string event);    
+            void create_root(const node::value_type& entry, const std::string task); 
+            void insert(const node::value_type& entry, const std::string task);    
             void root_remove();
             void reheapification();
             void inorder(node* this_ptr);
             void Most_important();
+
+            void insert_left(const int val,node* this_ptr);
+            void insert_right(const int val, node* this_ptr);
+            node* questions();
+            void DLD(std::string task);
+            void print_tasks();
         private:
             node* root_ptr;
             node* current_ptr;
     };
+    std::string Capitalize(std::string word);
 }
 
 
