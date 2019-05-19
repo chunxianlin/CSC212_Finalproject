@@ -27,17 +27,11 @@ namespace Final_project{
             node* left(){return left_child;}
             const node* right() const {return right_child;}
             node* right(){return right_child;}
-
-           
-            
         private:
             std::string data_field;
             value_type value_field;
             node* left_child;
             node* right_child;
     };
-    
 }
-
-
 #endif

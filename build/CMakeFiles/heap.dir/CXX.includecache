@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/heap.cpp
+iostream
+-
+heap.h
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/heap.h
+queue
+-
+string
+-
+fstream
+-
+
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/heap.h
+node.h
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/node.h
+iostream
+-
+queue
+-
+cstdlib
+-
+
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/node.h
+iostream
+-
+cstdlib
+-
+string
+-
+

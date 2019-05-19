@@ -1,0 +1,5 @@
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/build/CMakeFiles/rebuild_cache.dir
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/build/CMakeFiles/edit_cache.dir
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/build/CMakeFiles/main.dir
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/build/CMakeFiles/node.dir
+/mnt/e/lucas/HWS/2019 Spring/CSC212/csc212-final_project/CSC212_Finalproject/build/CMakeFiles/heap.dir

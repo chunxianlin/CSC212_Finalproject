@@ -2,9 +2,12 @@
 #include "heap.h"
 #include <queue>
 #include <string>
+#include <fstream>
 namespace Final_project{
     void heap::create_root(const node::value_type& entry, const std::string task){
-        root_ptr = new node(entry,task);
+        node* temp;
+        temp = new node(entry,task);
+        root_ptr = temp;
         current_ptr = root_ptr;
     };
     void heap::insert(const node::value_type& entry, const std::string task){
@@ -15,12 +18,23 @@ namespace Final_project{
         else{
             std::queue<node*> tree_ptr;
             tree_ptr.push(root_ptr);
-
             while(true){
                 node* temp;
                 node* cursor;
                 temp = new node(entry,task);
                 cursor = tree_ptr.front();
+                if(cursor->left()!=NULL){
+                    if((cursor->left())->data()==task){
+                        std::cout<<"THIS TASK IS ALREADY EXIST!"<<std::endl;
+                        break;
+                    }
+                }
+                else if (cursor->right()!=NULL){
+                    if((cursor->right())->data()==task){
+                        std::cout<<"THIS TASK IS ALREADY EXIST!"<<std::endl;
+                        break;
+                    }
+                }
                 if(cursor->left() == NULL){
                     cursor->set_left(temp);
                     current_ptr = temp;
@@ -28,7 +42,7 @@ namespace Final_project{
                 }
                 else if(cursor->right() == NULL){
                     cursor->set_right(temp);
-                    current_ptr = temp;
+                    current_ptr = temp;;
                     break;
                 }
                 else if(cursor->left() != NULL && cursor->right() != NULL){
@@ -78,7 +92,8 @@ namespace Final_project{
         //delete root directly if there's no leafs
         if(root_ptr == NULL){return;}
         if(root_ptr->left()==NULL&&root_ptr->right()==NULL){
-            delete root_ptr;
+            root_ptr = NULL;
+
             return;
         }
         //set the current pointer or the last to the root
@@ -92,26 +107,30 @@ namespace Final_project{
         while(true){
             cursor = node_ptr.front();
             if(cursor->left()==current_ptr){
-                cursor = cursor->left();
-                delete cursor;
+                cursor->set_left(NULL);
                 break;
             }
             else if(cursor->right()==current_ptr){
                 node_ptr.push(cursor->left());
-                cursor = cursor->right();
-                delete cursor;
+                cursor->set_right(NULL);
                 break;
             }
             else{
                 if(cursor->left()!=NULL){node_ptr.push(cursor->left());}
                 if(cursor->right()!=NULL){node_ptr.push(cursor->right());}
+                node_ptr.pop();
             }
         }
         //set the current pointer to the last node
         while(node_ptr.size()>1){
             node_ptr.pop();
         }
+        if(root_ptr == NULL){
+            current_ptr = NULL;
+        }
+        else{
         current_ptr = node_ptr.front();
+        }
         //rearrange
         reheapification();
     };
@@ -202,6 +221,7 @@ namespace Final_project{
         }
         int level;
         level = question_list->value();
+        std::cout<<"The level is "<<level<<std::endl;
         this->insert(level, task);
         return;
     };
@@ -219,5 +239,112 @@ namespace Final_project{
             print.pop();
         }
     };
-
+    void heap::count(){
+        std::queue<node*> traverse;
+        std::queue<node*> number_of_task;
+        node* cursor;
+        number_of_task.push(root_ptr);
+        traverse.push(root_ptr);
+        while(!traverse.empty()){
+            cursor = traverse.front();
+            if(cursor->left()!=NULL){
+                traverse.push(cursor->left());
+                number_of_task.push(cursor->left());
+            }
+            if(cursor->right()!=NULL){
+                traverse.push(cursor->right());
+                number_of_task.push(cursor->right());
+            }
+            traverse.pop();
+        }
+        std::cout<<"YOU hAVE "<<number_of_task.size()<<" TASK(S) LEFT."<<std::endl;
+        
+    };
+    void To_do_list(){
+        std::cout<<"<<TO DO LIST>>"<<std::endl;
+        std::cout<<"ENTER 'HELP' FOR INSTRUCTION MANUAL"<<std::endl;
+        std::string user_input;
+        heap my_list;
+        std::string exit;
+        while(exit != "EXIT"){
+            std::cout<<"NEXT INSTRUCTION:";
+            std::getline(std::cin,user_input);
+            user_input = Capitalize(user_input);
+            if(user_input =="HELP"){
+                std::cout<<"NEW TASK--put a new task on the to do list."<<std::endl;
+                std::cout<<"TO DO--show the first thing on the to do list."<<std::endl;
+                std::cout<<"FINISHED--check and delete the first task."<<std::endl;
+                std::cout<<"VIEW TASKS--view all the tasks."<<std::endl;
+                std::cout<<"REMAINING--show remaining task(s)"<<std::endl;
+                std::cout<<"LOAD--load your tasks from saved file."<<std::endl;
+                std::cout<<"SAVE--save your tasks into a file."<<std::endl;
+                std::cout<<"EXIT--to exit your to do list."<<std::endl;
+            }
+            else if(user_input == "NEW TASK"){
+                std::string new_task;
+                std::cout<<"ENTER THE NEW TASK:";
+                std::getline(std::cin, new_task);std::cout<<std::endl;
+                my_list.DLD(new_task);
+                std::cout<<"NEW TASK RECORDED."<<std::endl;
+            }
+            else if(user_input == "TO DO"){
+                my_list.Most_important();
+            }
+            else if(user_input == "FINISHED"){
+                my_list.root_remove();
+                std::cout<<"YOU HAVE FINISHED A TASK! CONGRADUATION!"<<std::endl;
+            }
+            else if(user_input == "VIEW TASKS"){
+                std::cout<<"YOUR TASKS:"<<std::endl;
+                my_list.print_tasks();
+            }
+            else if(user_input == "SAVE"){
+                std::string filename = "mylist.txt";
+                std::ofstream outFile;
+                outFile.open(filename.c_str());
+                while(my_list.return_root() != NULL){
+                    std::string task = my_list.return_root()->data();
+                    int val = my_list.return_root()->value();
+                    outFile<<task<<std::endl;
+                    outFile<<val<<std::endl;
+                    my_list.root_remove();
+                }
+                outFile.close();
+            }
+            else if(user_input == "LOAD"){
+                std::string filename = "mylist.txt";
+                std::string line;
+                std::string hold_string;
+                std::ifstream inFile;
+                inFile.open(filename.c_str());
+                while(std::getline(inFile, line)){
+                    if(line.size()==1){
+                        char i = line[0];
+                        int val = i -'0';
+                        my_list.insert(val, hold_string);
+                        hold_string = "";
+                        val = 0;
+                    }
+                    else if(line.size() != 1){
+                        hold_string = line;
+                    }
+                }
+                inFile.close();
+            }
+            else if(user_input == "REMAINING"){
+                my_list.count();
+            }
+            else if(user_input == "EXIT"){
+                std::cout<<"DID YOU SAVE YOUR LIST?(Y/N)"<<std::endl;
+                std::getline(std::cin, exit);
+                exit = Capitalize(exit);
+                if(exit == "Y"|| exit == "YES"){
+                    exit = "EXIT";
+                }
+                else if(exit == "N" || exit == "NO"){
+                    std::cout<<"PLEASE SAVE YOUR LIST FIRST THEN EXIT AGAIN!"<<std::endl;
+                }
+            }
+        }
+    }
 }

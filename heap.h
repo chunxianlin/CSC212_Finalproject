@@ -23,11 +23,14 @@ namespace Final_project{
             node* questions();
             void DLD(std::string task);
             void print_tasks();
+            node* return_root(){return root_ptr;}
+            void count();
         private:
             node* root_ptr;
             node* current_ptr;
     };
     std::string Capitalize(std::string word);
+    void To_do_list();
 }
 
 
