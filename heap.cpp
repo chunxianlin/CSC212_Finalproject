@@ -263,11 +263,14 @@ namespace Final_project{
     void To_do_list(){
         std::cout<<"<<TO DO LIST>>"<<std::endl;
         std::cout<<"ENTER 'HELP' FOR INSTRUCTION MANUAL"<<std::endl;
+        std::cout<<"NEXT INSTRUCTION:";
         std::string user_input;
         heap my_list;
         std::string exit;
         while(exit != "EXIT"){
+            if(!iscntrl(user_input[0])){
             std::cout<<"NEXT INSTRUCTION:";
+            }
             std::getline(std::cin,user_input);
             user_input = Capitalize(user_input);
             if(user_input =="HELP"){
