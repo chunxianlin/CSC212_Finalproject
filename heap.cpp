@@ -269,7 +269,7 @@ namespace Final_project{
         std::string exit;
         while(exit != "EXIT"){
             if(!iscntrl(user_input[0])){
-            std::cout<<"NEXT INSTRUCTION:";
+                std::cout<<"NEXT INSTRUCTION:";
             }
             std::getline(std::cin,user_input);
             user_input = Capitalize(user_input);
@@ -349,5 +349,5 @@ namespace Final_project{
                 }
             }
         }
-    }
+    };
 }
