@@ -1,4 +1,4 @@
-# CSC212_Finalproject
+# CSC212_Finalproject // link: https://github.com/chunxianlin/CSC212_Finalproject.git
 # Final project for CSC212
 #    For the final project I decided to do a to do list. The data structure I'm using is heap. By putting tasks onto the list, the list will rearrange tasks and returning them in a customized order. I had a total of six files for this project, main.cpp, node,cpp, node.h, heap.cpp, heap.h, and a Cmake file. Main.cpp is a simple file that calls the TO_DO_LIST() function. Node.h is a file containing class node initialized as int type. Within the class node there is a constructor node, member functions of node, and private member variables. The constructor is initialized as having an empty string, an empty int, two NULL pointers. The functions for the class are setters and getters. All functions in this class have a time complexity of O(1). Private member variables are data_field that holds string, value_field holds int, left_child and right_child hold pointers. Since everything is done in node.h, node.cpp is actually empty but just in case I need to put some functions there.
 
